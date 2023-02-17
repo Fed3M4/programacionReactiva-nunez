@@ -1,0 +1,27 @@
+h2 {
+    text-align: center;
+}
+table {
+    background-color: aquamarine;
+}
+ul {
+    list-style: none;
+}
+.cursosLi {
+    font-weight: bold;
+    background-color: rgb(167, 155, 179);
+    width: 10rem;
+    text-align: center;
+    border: solid blue 1px;
+    border-radius: 5px;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    margin: 0;
+    color: rgb(12, 12, 61);
+}
+h4 {
+    padding: 0.55rem;
+    margin: 0;
+}

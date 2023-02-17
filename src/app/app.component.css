@@ -1,0 +1,26 @@
+.contenedor {
+    display: grid;
+    grid-template-columns: 1.5fr 9fr;
+    grid-template-rows: 1.3fr 4fr 5fr;
+    height: 100vh;
+    grid-template-areas: 
+    "header header"
+    "navbar alumnos"
+    "abm alumnos";
+}
+.header {
+    grid-area: header;
+}
+.alumnos {
+    grid-area: alumnos;
+    background-color: rgb(202, 209, 207);
+}
+.navbar {
+    grid-area: navbar;
+    background-color: rgb(179, 176, 209);
+    padding: 0;
+}
+.abm {
+    grid-area: abm;
+    background-color: rgb(179, 176, 209);
+}
