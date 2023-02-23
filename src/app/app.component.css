@@ -6,7 +6,7 @@
     grid-template-areas: 
     "header header"
     "navbar alumnos"
-    "abm alumnos";
+    "navbar alumnos";
 }
 .header {
     grid-area: header;

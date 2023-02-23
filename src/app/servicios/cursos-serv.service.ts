@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Curso } from '../models/curso';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CursosServService {
-  mostrarCursos() {
-    return [
+  private cursos: Curso[] =  [
       {
         nombre: 'Operaciones',
         profesor: {
@@ -42,7 +42,10 @@ export class CursosServService {
         duracion: '24 meses',
         comision: 1237
       }
-    ]
+    ];
+      constructor() {}
+
+  obtenerCurso(): Array<Curso> {
+    return this.cursos
   }
-  constructor() { }
 }

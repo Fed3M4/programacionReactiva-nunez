@@ -12,6 +12,7 @@ import { TodosLosCursosComponent } from '../todos-los-cursos/todos-los-cursos.co
   styleUrls: ['./alumnos.component.css']
 })
 export class AlumnosComponent {
+  filtro!: string;
   alumnos: Alumno []= [
     {
       nombre: 'Federico',
@@ -71,7 +72,7 @@ export class AlumnosComponent {
     private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.cursos = this.cursosServ.mostrarCursos();
+    this.cursos = this.cursosServ.obtenerCurso();
   }
 
   abrirModal(curso: Curso) {

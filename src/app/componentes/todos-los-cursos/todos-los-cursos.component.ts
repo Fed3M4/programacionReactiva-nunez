@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
   styleUrls: ['./todos-los-cursos.component.css']
 })
 export class TodosLosCursosComponent implements OnInit {
-  cursos: any;
+  cursos!: Curso[];
   constructor(
     private cursosServ: CursosServService,
     private dialogRef: MatDialogRef<TodosLosCursosComponent>,
@@ -17,6 +17,6 @@ export class TodosLosCursosComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.cursos = this.cursosServ.mostrarCursos();
+    this.cursos = this.cursosServ.obtenerCurso();
   }
 }

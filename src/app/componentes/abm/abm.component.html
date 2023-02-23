@@ -1,4 +1,6 @@
-<div class="divPrincipal">
+<h1 mat-dialog-title> Alta alumnos </h1>
+<div mat-dialog-content>
+  <div class="divPrincipal">
     <div class="formul d-flex justify-content-center align-items-center">
       <form [formGroup]="formularioLogin" (ngSubmit)="login()" class="was-validated">
         <div class="mb-3">
@@ -6,12 +8,15 @@
           <input formControlName="correo" type="email" class="form-control" id="exampleInputEmail1"
             aria-describedby="emailHelp">
           <div class="valid-feedback"
-            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].valid">Código de alumno correcto</div>
+            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].valid">Código de
+            alumno correcto</div>
           <div class="invalid-feedback"
-            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].errors?.['required']">El
+            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].errors?.['required']">
+            El
             campo código de alumno no puede estar vacío</div>
           <div class="invalid-feedback"
-            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].errors?.['pattern']">El
+            *ngIf="formularioLogin.controls['correo'].dirty && formularioLogin.controls['correo'].errors?.['pattern']">
+            El
             campo código de alumno tiene un formato incorrecto</div>
         </div>
         <div class="mb-3">
@@ -36,3 +41,7 @@
       </form>
     </div>
   </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button>Cerrar</button>
+</div>

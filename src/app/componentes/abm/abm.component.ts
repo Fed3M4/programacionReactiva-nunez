@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -11,7 +12,9 @@ export class ABMComponent {
   formularioLogin: FormGroup;
 
 
-  constructor(){
+  constructor(
+    private dialogRef: MatDialogRef<ABMComponent>
+  ){
     let regexCorreo: string = '^[a-z]+@[a-z]+\\.[a-z]{2,3}$' //aca definimos la expresion regular que usamos en el pattern
     let controles: any = {
       correo: new FormControl('ejemplo@gmail.com', [Validators.required, Validators.pattern(regexCorreo)]),
