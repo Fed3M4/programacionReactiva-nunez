@@ -1,4 +1,4 @@
-<h2>Lista de Estudiantes:</h2>
+<!-- <h2>Lista de Estudiantes:</h2>
 <div class="row">
     <mat-form-field>
         <mat-label>
@@ -6,7 +6,7 @@
         </mat-label>
         <input type="text" matInput [(ngModel)]="filtro">
     </mat-form-field>
-</div>
+</div> -->
 
 <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="nombre">
@@ -33,9 +33,8 @@
     <tr mat-row *matRowDef="let row; columns: columnas"></tr>
 </table>
 <h2>Cursos disponibles:</h2>
-
 <div class="d-flex justify-content-evenly align-items-center">
-    <div class="d-flex flex-column justify-content-evenly align-items-center" *ngFor="let curso of cursos | filtrarCurso: filtro">
+    <div class="d-flex flex-column justify-content-evenly align-items-center" *ngFor="let curso of cursos$ | async">
         <button mat-raised-button color="primary" class="d-flex flex-row justify-content-evenly align-items-center align-items-center cursosLi" (click)="abrirModal(curso)"><h4>{{ curso.nombre }}</h4></button>
     </div>
 </div>

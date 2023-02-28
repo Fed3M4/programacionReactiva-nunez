@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Alumno } from "src/app/models/alumno";
 import { Curso } from 'src/app/models/curso';
 import { AlumnosServService } from 'src/app/servicios/alumnos-serv.service';
@@ -21,6 +21,7 @@ export class AlumnosComponent implements OnInit, OnDestroy {
   suscripcion!: Subscription;
 
   cursos: any;
+  cursos$!: Observable<Curso[]>
   constructor(
     private alumnosServ: AlumnosServService,
     private cursosServ: CursosServService,
@@ -33,13 +34,17 @@ export class AlumnosComponent implements OnInit, OnDestroy {
     // }).catch((error: any) =>{
     //   console.log('Hubo un error en el promise', error)
     // })
-    this.suscripcion = this.cursosServ.obtenerCursoObservable().subscribe((cursos: Curso[]) =>{
-      this.cursos = cursos;
-    })
+    // this.suscripcion = this.cursosServ.obtenerCursoObservable().subscribe((cursos: Curso[]) =>{
+    //   this.cursos = cursos;
+    // })
     this.dataSource = new MatTableDataSource<Alumno>();
     this.alumnosServ.obtenerAlumnoObservable().subscribe((alumnos: Alumno[]) => {
       this.dataSource.data = alumnos;
     });
+    this.cursos$ = this.cursosServ.obtenerCursoObservable();
+    this.cursos$.subscribe((cursos: Curso[]) => {
+      this.cursos = cursos;
+    })
   }
   ngOnDestroy(): void {
     this.suscripcion.unsubscribe();
