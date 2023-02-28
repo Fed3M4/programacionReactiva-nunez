@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { Alumno } from "src/app/models/alumno";
 import { Curso } from 'src/app/models/curso';
+import { AlumnosServService } from 'src/app/servicios/alumnos-serv.service';
 import { CursosServService } from 'src/app/servicios/cursos-serv.service';
 import { TodosLosCursosComponent } from '../todos-los-cursos/todos-los-cursos.component';
 
@@ -11,68 +13,36 @@ import { TodosLosCursosComponent } from '../todos-los-cursos/todos-los-cursos.co
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.css']
 })
-export class AlumnosComponent {
+export class AlumnosComponent implements OnInit, OnDestroy {
   filtro!: string;
-  alumnos: Alumno []= [
-    {
-      nombre: 'Federico',
-      apellido: 'Nuñez',
-      correo: 'fede@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2021, 10, 13)
-    },
-    {
-      nombre: 'Soledad',
-      apellido: 'Defrance',
-      correo: 'sole@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2021, 4, 8)
-    },
-    {
-      nombre: 'Romina',
-      apellido: 'Gomez',
-      correo: 'romi@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2021, 11, 20)
-    },
-    {
-      nombre: 'Francisco',
-      apellido: 'Pope',
-      correo: 'pope@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2019, 8, 25)
-    },
-    {
-      nombre: 'Ayelen',
-      apellido: 'Santos',
-      correo: 'aye@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2017, 3, 2)
-    },
-    {
-      nombre: 'Pepe',
-      apellido: 'Quiroz',
-      correo: 'pepe@gmail',
-      contrasenia: 'asdf1234',
-      habilitado: true,
-      inscriptoDesde: new Date(2022, 10, 13)
-    },
-  ]
-  dataSource: MatTableDataSource<Alumno> = new MatTableDataSource<Alumno>(this.alumnos);
-  columnas: string[] = ['nombre', 'apellido', 'correo', 'inscriptoDesde', 'habilitado' ]
+
+  dataSource!: MatTableDataSource<Alumno>;
+  columnas: string[] = ['nombre', 'apellido', 'correo', 'inscriptoDesde', 'habilitado' ];
+  suscripcion!: Subscription;
 
   cursos: any;
   constructor(
+    private alumnosServ: AlumnosServService,
     private cursosServ: CursosServService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
-    this.cursos = this.cursosServ.obtenerCurso();
+    // this.cursos = this.cursosServ.obtenerCursoPromise().then((cursos: Curso[])=>{
+    //   this.cursos = cursos;
+    // }).catch((error: any) =>{
+    //   console.log('Hubo un error en el promise', error)
+    // })
+    this.suscripcion = this.cursosServ.obtenerCursoObservable().subscribe((cursos: Curso[]) =>{
+      this.cursos = cursos;
+    })
+    this.dataSource = new MatTableDataSource<Alumno>();
+    this.alumnosServ.obtenerAlumnoObservable().subscribe((alumnos: Alumno[]) => {
+      this.dataSource.data = alumnos;
+    });
+  }
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
   }
 
   abrirModal(curso: Curso) {

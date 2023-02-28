@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Curso } from '../models/curso';
 
 @Injectable({
@@ -43,9 +44,32 @@ export class CursosServService {
         comision: 1237
       }
     ];
-      constructor() {}
+    // private cursos$!: Observable<Curso[]>;
+    private cursos$!: BehaviorSubject<Curso[]>;
+      constructor() {
+        // this. cursos$ = new Observable<Curso[]>((suscriptor) => {
+        //   suscriptor.next(this.cursos);
+        // })
+        this.cursos$ = new BehaviorSubject(this.cursos);
+      }
 
-  obtenerCurso(): Array<Curso> {
-    return this.cursos
+  obtenerCursoPromise(): Promise<Curso[]> {
+    return new Promise((resolve, reject) =>{
+      if(this.cursos.length > 0) {
+        resolve(this.cursos);
+      } else {
+        reject({
+          codigo: 0,
+          descripcion: 'El array esta vacío',
+          data: []
+        });
+      }
+    })
+  }
+  // obtenerCursoObservable(): Observable<Curso[]> {
+  //   return this.cursos$;
+  // }
+  obtenerCursoObservable(): Observable<Curso[]> {
+    return this.cursos$.asObservable();
   }
 }
